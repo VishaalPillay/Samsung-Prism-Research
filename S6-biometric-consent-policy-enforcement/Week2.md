@@ -224,21 +224,7 @@ In the successful execution path, biometric media access is permitted only after
 
 ---
 
-# Week 2 Progress Summary
 
-## Completed
-
-- High-Level System Architecture
-- Component Architecture
-- Runtime Workflow (Successful Execution Path)
-
-## Planned for Next Update
-
-- Runtime Exception Handling Workflow
-- Policy Decision Workflow
-- Deployment Architecture
-- Integration Design
-- Design Decisions & Technical Rationale
 
 ---
 
