@@ -1,4 +1,4 @@
-# 🛡️ Samsung PRISM – Week 2 Documentation
+#  Samsung PRISM – Week 2 Documentation
 
 ## Aegis Agent – AI-driven Consent Governance & Privacy Enforcement Platform
 
