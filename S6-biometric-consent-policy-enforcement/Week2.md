@@ -66,7 +66,7 @@ The architecture is designed to:
 
 ## 2. High-Level Architecture
 
-![High-Level Architecture](images/high_level_architecture.jpg)
+![High-Level Architecture](images/high_level_architecture..jpg)
 
 ### 2.1 Architecture Workflow
 
