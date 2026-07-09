@@ -1,1 +1,0 @@
-**Plans and Research about Consent Givernance & analytics platform**

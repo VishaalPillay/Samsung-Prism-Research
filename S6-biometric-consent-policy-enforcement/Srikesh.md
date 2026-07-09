@@ -23,7 +23,7 @@
 | **Work Package** | S6 - Biometric Consent & Policy Enforcement Framework |
 | **Module Scope** | Biometric Consent Manager, Policy Decision Engine, Access Enforcement Module |
 | **Primary Deliverable** | Consent-aware backend design for runtime biometric authorization |
-| **Author** | `<Author Name>` |
+| **Author** | `P.Srikesh` |
 | **Repository** | `biometric-policy-enforcement` |
 | **Document Type** | Engineering knowledge document |
 
