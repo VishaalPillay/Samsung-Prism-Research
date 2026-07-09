@@ -121,7 +121,7 @@ S6 does not store or directly access biometric media. It authorizes access to bi
 
 ## 3. Component Architecture
 
-![Component Architecture](images/component_architecture.jpg)
+![Component Architecture](images/component_architecture..jpg)
 
 ### 3.1 Component Responsibilities
 
@@ -195,7 +195,7 @@ Key responsibilities include:
 
 ## 4. Runtime Workflow: Successful Execution Path
 
-![Runtime Workflow](images/runtime_workflow_success.png)
+![Runtime Workflow](images/runtime_workflow_success..png)
 
 ### 4.1 Workflow Overview
 
