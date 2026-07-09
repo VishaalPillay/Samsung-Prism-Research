@@ -7,7 +7,7 @@
 ![Week](https://img.shields.io/badge/Week-2-success?style=for-the-badge)
 ![Focus](https://img.shields.io/badge/Focus-Software_Design_&_Architecture-orange?style=for-the-badge)
 ![Module](https://img.shields.io/badge/Module-Biometric_Consent_&_Policy_Enforcement-blueviolet?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-In_Progress-brightgreen?style=for-the-badge)
+
 
 ---
 
