@@ -1,16 +1,26 @@
-# Samsung PRISM – Week 2 Documentation
+# 🛡️ Samsung PRISM – Week 2 Documentation
 
-**Project:** Aegis Agent – AI-driven Consent Governance & Privacy Enforcement Platform
+## Aegis Agent – AI-driven Consent Governance & Privacy Enforcement Platform
 
-**Organization:** Samsung Research PRISM
+![Samsung PRISM](https://img.shields.io/badge/Samsung-PRISM-1428A0?style=for-the-badge&logo=samsung&logoColor=white)
+![Work Package](https://img.shields.io/badge/Work_Package-S6-0052CC?style=for-the-badge)
+![Week](https://img.shields.io/badge/Week-2-success?style=for-the-badge)
+![Focus](https://img.shields.io/badge/Focus-Software_Design_&_Architecture-orange?style=for-the-badge)
+![Module](https://img.shields.io/badge/Module-Biometric_Consent_&_Policy_Enforcement-blueviolet?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-In_Progress-brightgreen?style=for-the-badge)
 
-**Module:** S6 – Biometric Consent & Policy Enforcement Framework
+---
 
-**Author:** Srikesh
+## 📋 Project Information
 
-**Reporting Period:** Week 2
-
-**Focus:** Software Design & Architecture
+| **Property** | **Details** |
+|--------------|-------------|
+| **Project** | Aegis Agent – AI-driven Consent Governance & Privacy Enforcement Platform |
+| **Organization** | Samsung Research PRISM |
+| **Work Package** | S6 – Biometric Consent & Policy Enforcement Framework |
+| **Author** | Srikesh |
+| **Reporting Period** | Week 2 |
+| **Focus** | Software Design & Architecture |
 
 ---
 
