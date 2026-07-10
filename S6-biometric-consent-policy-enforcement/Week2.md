@@ -323,14 +323,74 @@ In the successful execution path, biometric media access is permitted only after
 
 ---
 
+### 4.4 Exception Handling Workflow
 
+```mermaid
+flowchart TD
+    Start((Start))
+    A1[User submits biometric request]
+    A2[Validate JWT token]
+    D1{JWT valid?}
+    R1[Reject request]
+    G1[Generate audit event]
+    E1(((End)))
+
+    A5[Validate consent]
+    D2{Consent valid?}
+    R2[Reject request]
+    G2[Generate audit event]
+    E2(((End)))
+
+    A8[Evaluate authorization policy]
+    D3{Policy satisfied?}
+    AD[Authorization denied]
+    AE[Access enforcement module]
+    PK[Publish audit event to Kafka]
+    RR[Return authorization response]
+    E3(((End)))
+
+    D4{Re-consent required?}
+    RC[Request new consent]
+    G3[Generate audit event]
+    E4(((End)))
+    CONT[/Continues to normal flow/]
+
+    Start --> A1 --> A2 --> D1
+    D1 -- NO --> R1 --> G1 --> E1
+    D1 -- YES --> A5 --> D2
+    D2 -- NO --> R2 --> G2 --> E2
+    D2 -- YES --> A8 --> D3
+    D3 -- NO --> AD --> AE --> PK --> RR --> E3
+    D3 -- YES --> D4
+    D4 -- YES --> RC --> G3 --> E4
+    D4 -- NO --> CONT
+
+    classDef activity fill:#E6F1FB,stroke:#185FA5,color:#042C53,font-weight:bold;
+    classDef decision fill:#FAEEDA,stroke:#854F0B,color:#412402,font-weight:bold;
+    classDef failure fill:#FAECE7,stroke:#B23A2E,color:#5A160F,font-weight:bold;
+    classDef terminal fill:#F1EFE8,stroke:#5F5E5A,color:#2C2C2A,font-weight:bold;
+    classDef note fill:#FBFBF9,stroke:#5F5E5A,color:#2C2C2A,stroke-dasharray: 4 3;
+
+    class A1,A2,A5,A8 activity;
+    class D1,D2,D3,D4 decision;
+    class R1,G1,R2,G2,AD,AE,PK,RR,RC,G3 failure;
+    class Start,E1,E2,E3,E4 terminal;
+    class CONT note;
+```
+
+The above figure illustrates the exception handling mechanism implemented within the S6 - Biometric Consent & Policy Enforcement Framework. Unlike the successful runtime workflow presented in Figure 4.1, this workflow focuses on scenarios where a biometric access request cannot be processed due to authentication failures, invalid consent, policy violations, or the need for renewed user consent.
+
+The workflow begins by validating the JWT access token. Requests containing invalid or expired tokens are immediately rejected, and an audit event is generated to record the failed authentication attempt.
+
+If authentication succeeds, the framework validates the user's biometric consent. Requests associated with revoked, expired, or unavailable consent records are rejected, and the rejection is logged through the audit service to maintain compliance and traceability.
+
+For requests with valid consent, the Policy Decision Engine evaluates the applicable authorization rules. If the requested operation violates organizational policies or privacy constraints, the framework returns an authorization denial and records the event for auditing purposes.
+
+Finally, the workflow checks whether renewed consent is required. When re-consent is necessary, the framework initiates the re-consent process and terminates the current request. If no additional consent is required, the request proceeds to the successful runtime workflow illustrated in Figure 4.1.
+
+This exception handling mechanism ensures that all failed authorization attempts are consistently managed, audited, and recorded before the request lifecycle is terminated.
 
 ---
-
-
-
----
-
 # Chapter 5 - Policy Decision Workflow
 
 ```mermaid
