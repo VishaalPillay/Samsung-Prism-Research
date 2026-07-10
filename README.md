@@ -1,187 +1,204 @@
 <div align="center">
 
-# Team B — Consent Enforcement & Data Governance
+# Aegis Agent — Team B · Consent Enforcement & Data Governance
 
-### Worklet 3 (W3) — Data Discovery, DSAR & Revocation
-Aegis Agent · AI-Driven Consent Governance & Privacy Enforcement Platform (PRISM CMP)
+**Dynamic Consent Enforcement Framework** · Work Packages S5–S8
+
+Part of **Aegis Agent**, an AI-driven Consent Governance & Privacy Enforcement Platform enabling compliant, traceable, privacy-preserving acquisition, management, and use of multimodal data across an enterprise.
 
 <br>
 
-![Worklet](https://img.shields.io/badge/Worklet-3-6E40C9?style=for-the-badge)
-![Team](https://img.shields.io/badge/Team-B_Consent_Enforcement-1F6FEB?style=for-the-badge)
+![Team](https://img.shields.io/badge/Team-B-1F6FEB?style=for-the-badge)
 ![Members](https://img.shields.io/badge/Members-4-2DA44E?style=for-the-badge)
-![Compliance](https://img.shields.io/badge/Compliance-DPDP_2023_·_GDPR-D29922?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Week_1_Foundations-8250DF?style=for-the-badge)
+![Compliance](https://img.shields.io/badge/Compliance-DPDP_2023_%C2%B7_GDPR-D29922?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Week_2_%E2%80%94_Design-8250DF?style=for-the-badge)
 
 </div>
 
 ---
 
 > [!IMPORTANT]
-> **The thesis in one line.** Team B does not own four separate projects — it owns one **consent enforcement and governance engine** with four modules (revocation, biometric policy, versioning, retention) that read and write the same consent state. The shared contracts in [`/contracts`](./contracts) are the source of truth every module must agree with before it agrees with itself.
+> **Thesis.** Team B is not four separate projects — it is **one consent-enforcement and governance engine** with four modules (revocation, biometric policy, versioning/analytics, retention) that read and write the **same consent state**. The shared interface contracts in `contracts/` are the source of truth every module must conform to before it agrees with itself.
 
 ---
 
 ## Table of Contents
 
-| # | Section |
-|---|---|
-| 1 | [Team Roster & Components](#1-team-roster--components) |
-| 2 | [Where Team B Fits in the Project](#2-where-team-b-fits-in-the-project) |
-| 3 | [System Interdependency Map](#3-system-interdependency-map) |
-| 4 | [Shared Contracts](#4-shared-contracts) |
-| 5 | [Known Overlaps & Working Agreements](#5-known-overlaps--working-agreements) |
-| 6 | [Repository Structure](#6-repository-structure) |
-| 7 | [Documentation Standard](#7-documentation-standard) |
-| 8 | [Status Tracker](#8-status-tracker) |
-| 9 | [Timeline — Month 1 Focus](#9-timeline--month-1-focus) |
-| 10 | [Regulatory Quick Reference](#10-regulatory-quick-reference) |
+- [Team Roster & Components](#team-roster--components)
+- [Where Team B Fits in the Project](#where-team-b-fits-in-the-project)
+- [System Interdependency Map](#system-interdependency-map)
+- [Shared Contracts](#shared-contracts)
+- [Known Overlaps & Working Agreements](#known-overlaps--working-agreements)
+- [Documentation Standard](#documentation-standard)
+- [Tech Stack](#tech-stack)
+- [Timeline & Milestones](#timeline--milestones)
+- [Regulatory Quick Reference](#regulatory-quick-reference)
 
 ---
 
-## 1. Team Roster & Components
+## Team Roster & Components
 
-| # | Owner | Sub-Topic | Component | Folder |
+| WP | Owner | Sub-topic | Component | Folder |
 |---|---|---|---|---|
-| 5 | Vishaal Pillay | Revocation Orchestration + Re-consent & Purpose Change Management | Dynamic Consent Management Engine | [`S5-revocation-orchestration`](./S5-revocation-orchestration) |
-| 6 | Srikesh Praveen | Biometric Consent & Governance + Consent-Aware Policy Enforcement | Biometric Consent & Policy Enforcement Framework | [`S6-biometric-consent-policy-enforcement`](./S6-biometric-consent-policy-enforcement) |
-| 7 | Nilesh Pratap Singh Deora | Consent Versioning & Policy Version Control + Consent Analytics & Governance Dashboard | Consent Governance & Analytics Platform | [`S7-consent-versioning-governance`](./S7-consent-versioning-governance) |
-| 8 | N D Jitendra | Data Retention & Purpose Limitation Management + Dataset Usage Tracking & Monitoring | Data Lifecycle & Retention Management | [`S8-retention-purpose-limitation`](./S8-retention-purpose-limitation) |
+| S5 | Vishaal Pillay | Revocation Orchestration + Re-consent & Purpose Change Management | Dynamic Consent Management Engine | [S5-revocation-orchestration](S5-revocation-orchestration/) |
+| S6 | Srikesh Praveen | Biometric Consent & Governance + Consent-Aware Policy Enforcement | Biometric Consent & Policy Enforcement Framework | [S6-biometric-consent-policy-enforcement](S6-biometric-consent-policy-enforcement/) |
+| S7 | Nilesh Pratap Singh Deora | Consent Versioning & Policy Version Control + Consent Analytics & Governance Dashboard | Consent Governance & Analytics Platform | [S7-consent-versioning-governance](S7-consent-versioning-governance/) |
+| S8 | N D Jitendra | Data Retention & Purpose Limitation Management + Dataset Usage Tracking & Monitoring | Data Lifecycle & Retention Management | [S8-retention-purpose-limitation](S8-retention-purpose-limitation/) |
+
+**Team deliverable:** the Dynamic Consent Enforcement Framework — the enforcement and governance core of the Aegis Agent platform.
 
 ---
 
-## 2. Where Team B Fits in the Project
+## Where Team B Fits in the Project
 
-Worklet 3 covers Data Discovery, DSAR, and Revocation across the Aegis Agent / PRISM CMP platform.
+Aegis Agent is built by 16 students across four teams, organized by Work Packages S1–S16. The master project specification (Aegis_Agent) is the authoritative source of truth for scope and boundaries.
+
+| Team | Scope | Work Packages | Team Deliverable |
+|---|---|---|---|
+| Team A | Regulatory & Consent Governance | S1–S4 | Complete Consent Governance Platform |
+| **Team B — this repository** | **Consent Enforcement & Data Governance** | **S5–S8** | **Dynamic Consent Enforcement Framework** |
+| Team C | AI Governance & Privacy | S9, S10, S11, S13 | AI Privacy & Governance Platform |
+| Team D | Security, Audit & UX | S12, S14, S15, S16 | Secure Enterprise Privacy Platform |
+
+**Platform-level success metrics (from the master specification):** ≥ 99% consent capture & governance accuracy · ≥ 98% traceability between consent records and datasets · 100% auditability of consent, privacy, and DSAR activities.
 
 > [!NOTE]
-> **Assumption, to be confirmed with mentors:** Worklet 3's eight assigned sub-topics split into two teams — Team A (items 1–4: data subject / DSAR portals, discovery, tracing, action execution) and Team B (items 5–8, this repository: consent state-change enforcement and governance). Team B's revocation and purge flows are expected to call into Team A's discovery and action-execution layer to locate and act on data. Confirm this boundary explicitly before Month 2 integration work begins.
+> **Key assumption, pending mentor confirmation:** S6 and S7 have consent-management overlap with the consent-capture side of the platform. The boundary between Team B (enforcement and governance) and consent capture is assumed but not yet ratified; interfaces must be confirmed with the relevant owners before Month-2 integration.
+
+Within Team B, all four modules are peers arranged around the shared interface layer:
 
 ```mermaid
-flowchart LR
-    W1["Worklet 1 — Consent Collection & Metadata"] --> W2["Worklet 2 — PII Classification & Redaction"]
-    W2 --> W3["Worklet 3 — Data Discovery, DSAR & Revocation"]
-    W3 --> W4["Worklet 4 — Integration, Testing & Go-Live"]
-
-    subgraph W3DETAIL["Worklet 3 — Team Split"]
-        TA["Team A — Discovery, DSAR Portals, Tracing (items 1-4)"]
-        TB["Team B — Consent Enforcement & Governance (items 5-8, this repo)"]
-        TA <--> TB
+flowchart TB
+    subgraph TEAMB["Team B — Dynamic Consent Enforcement Framework"]
+        S5["S5 · Dynamic Consent Management Engine<br/>revocation, re-consent, purpose change"]
+        S6["S6 · Biometric Consent & Policy Enforcement Framework<br/>biometric governance, policy decisions"]
+        CONTRACTS{{"contracts/<br/>shared interface layer"}}
+        S7["S7 · Consent Governance & Analytics Platform<br/>versioning, analytics, dashboards"]
+        S8["S8 · Data Lifecycle & Retention Management<br/>retention, purpose limitation, usage tracking"]
     end
+
+    S5 <--> CONTRACTS
+    S6 <--> CONTRACTS
+    S7 <--> CONTRACTS
+    S8 <--> CONTRACTS
 ```
 
 ---
 
-## 3. System Interdependency Map
+## System Interdependency Map
+
+All four modules operate against the same consent state; the map below shows who writes, who reads, who decides, and who observes.
 
 ```mermaid
 flowchart LR
-    subgraph SHARED["Shared Contracts — team-owned, PR-reviewed"]
-        DM[Consent Data Model]
-        SM[Consent State Machine]
-        PI[Policy Decision Interface]
-        EV[Event / Audit Schema]
-    end
+    S5["S5 — Dynamic Consent Management Engine"]
+    S6["S6 — Biometric Consent & Policy Enforcement"]
+    S7["S7 — Consent Governance & Analytics"]
+    S8["S8 — Data Lifecycle & Retention"]
+    CR[("Shared consent state — PostgreSQL<br/>consent-data-model.md")]
+    BUS["Event bus — Kafka / RabbitMQ<br/>event-audit-schema.md"]
+    PURGE["Shared purge orchestrator<br/>co-owned by S5 and S8"]
 
-    S5["S5 — Revocation, Re-consent, Purpose Change"]
-    S6["S6 — Biometric Consent + Policy Decision/Enforcement"]
-    S7["S7 — Versioning + Governance Dashboard"]
-    S8["S8 — Retention + Purpose Limitation + Usage"]
+    S5 -- "state transitions per consent-state-machine.md" --> CR
+    S6 -- "policy decisions read state (policy-decision-interface.md)" --> CR
+    S8 -- "retention and purpose checks at point of use" --> CR
+    S7 -- "reads consent versions and history" --> CR
 
-    DM --> S5 & S6 & S7 & S8
-    SM --> S5
-    S6 -- policy decisions --> S5
-    S6 -- policy decisions --> S8
-    S7 -- version records --> S5
-    S5 -- shared purge trigger --> S8
-    S5 & S6 & S8 -- events --> S7
+    S6 -- "re-consent verdicts route to" --> S5
+    S5 -- "revocation purge" --> PURGE
+    S8 -- "retention-expiry purge" --> PURGE
+
+    S5 -- "events" --> BUS
+    S6 -- "events" --> BUS
+    S8 -- "events" --> BUS
+    BUS -- "feeds dashboards and audit ledger" --> S7
 ```
 
-Read this as: the four components are peers, but they only stay compatible if all four treat `contracts/` as authoritative rather than each maintaining a private copy of the data model or state machine.
+Read this as: the modules stay compatible only if all four treat `contracts/` as authoritative, rather than each maintaining a private copy of the data model, state machine, decision interface, or event schema.
 
 ---
 
-## 4. Shared Contracts
+## Shared Contracts
 
-| File | Defines | Primary drafter | Reviewed by |
+The `contracts/` directory is being created as the Week-2 interface-contract deliverable. The four files below are its committed scope; file names are shown unlinked until the directory lands.
+
+| File | Defines | Owner | Reviewed by |
 |---|---|---|---|
-| [`consent-data-model.md`](./contracts/consent-data-model.md) | Canonical ConsentRecord fields (extends W1's model with versioning, purpose, retention, biometric tier) | TBD | All |
-| [`consent-state-machine.md`](./contracts/consent-state-machine.md) | States and transitions: Draft → Presented → Active → Suspended → Revoked / Expired → Purged, plus Re-consent | S5 owner | All |
-| [`policy-decision-interface.md`](./contracts/policy-decision-interface.md) | Contract for "is this action allowed?" — inputs (subject, consent state, purpose, resource) → allow / deny / redact | S6 owner | All |
-| [`event-audit-schema.md`](./contracts/event-audit-schema.md) | Event shape emitted by S5/S6/S8 and consumed by S7's dashboards | S7 owner | All |
+| `consent-data-model.md` | Canonical `ConsentRecord` and related entities | Shared | All four owners |
+| `consent-state-machine.md` | States and legal transitions: Draft → Presented → Active → Suspended → Revoked / Expired → Purged, plus the re-consent path | S5 | All four owners |
+| `policy-decision-interface.md` | The "is this action allowed?" contract: inputs (subject, consent state, purpose, resource) → allow / deny / redact / re-consent | S6 | All four owners |
+| `event-audit-schema.md` | Event shape emitted by S5, S6, and S8 and consumed by S7 dashboards and the audit ledger | S7 | All four owners |
 
 > [!WARNING]
-> Changes to any file in `contracts/` should go through review by all four owners before merge. This is the single control that prevents the four components from silently diverging.
+> **Review gate:** changes to any file in `contracts/` must be reviewed by all four owners before merge. This is the single control preventing the four modules from silently diverging.
 
 ---
 
-## 5. Known Overlaps & Working Agreements
+## Known Overlaps & Working Agreements
 
-| Overlap | Components | Proposed split | Status |
-|---|---|---|---|
-| Deletion cascade | S5 (revocation purge) vs. S8 (retention-expiry purge) | One shared purge orchestrator, triggered by either revocation or retention expiry — not two separate implementations | Proposed, confirm at kickoff |
-| Purpose handling | S5 (purpose *change*, triggers re-consent) vs. S8 (purpose *limitation*, enforced at query/usage time) | S5 owns the change event; S8 owns enforcement at point of use | Proposed, confirm at kickoff |
-| Dashboards | S7 (governance dashboard) vs. S8 (usage monitoring dashboard) | One dashboard platform, two views, sharing the event schema | Proposed, confirm at kickoff |
-
----
-
-## 6. Repository Structure
-
-```
-Samsung-Prism-Research/
-├── README.md
-├── CONTRIBUTOR-TEMPLATE.md
-├── contracts/
-│   ├── consent-data-model.md
-│   ├── consent-state-machine.md
-│   ├── policy-decision-interface.md
-│   └── event-audit-schema.md
-├── S5-revocation-orchestration/
-│   └── README.md
-├── S6-biometric-consent-policy-enforcement/
-│   └── README.md
-├── S7-consent-versioning-governance/
-│   └── README.md
-├── S8-retention-purpose-limitation/
-│   └── README.md
-```
-
----
-
-## 7. Documentation Standard
-
-Every component folder starts from [`CONTRIBUTOR-TEMPLATE.md`](./CONTRIBUTOR-TEMPLATE.md), copied to `README.md` inside the owner's folder. This keeps all four documents structurally comparable during cross-review — a reviewer should be able to find "what this exposes" and "open questions" in the same place across every doc.
-
----
-
-## 8. Status Tracker
-
-| Component | Owner | Status | Last Updated |
-|---|---|---|---|
-| S5 — Revocation Orchestration | Vishaal Pillay | In Progress | — |
-| S6 — Biometric Consent & Policy Enforcement | Srikesh Praveen | Not Started | — |
-| S7 — Versioning & Governance Dashboard | Nilesh Pratap Singh Deora | Not Started | — |
-| S8 — Retention & Purpose Limitation | N D Jitendra | Not Started | — |
-
----
-
-## 9. Timeline — Month 1 Focus
-
-Per the overall project timeline, Month 1 covers study and benchmarking of reference platforms, requirements gathering, DPDP mapping, and architecture sign-off. For Team B, Week 1 deliverables are design briefs and interface drafts — not implementation:
-
-- Canonical consent data model and state machine drafted in `contracts/`
-- Policy Decision Interface first draft (blocks S5 and S8 downstream)
-- One-page component brief per owner: scope, interfaces exposed/consumed, DPDP/GDPR mapping, one competitor benchmark
-
----
-
-## 10. Regulatory Quick Reference
-
-| Framework | Section / Article | Primarily covered by |
+| Overlap | Between | Working agreement |
 |---|---|---|
-| DPDP 2023 | S.5–11 (Consent) | S5, S7 (versioning ties to consent validity) |
-| DPDP 2023 | S.12–17 (Data Fiduciary — retention, security, accountability) | S8 |
-| DPDP 2023 | S.18–22 (Data Subject Rights) | S5 |
-| GDPR | Art. 6, 7 (Lawful basis, consent) | S5, S6 |
-| GDPR | Art. 15–22 (Data subject rights) | S5 |
-| GDPR | Art. 25 (Privacy by design/default) | S6 |
+| Deletion cascade | S5 (revocation purge) · S8 (retention-expiry purge) | One shared purge orchestrator, co-owned by S5 and S8 — a single implementation triggered by either revocation or retention expiry |
+| Purpose handling | S5 (purpose *change*) · S8 (purpose *limitation*) | S5 owns the purpose-change event, which triggers re-consent; S8 owns enforcement of purpose limitation at query/use time |
+| Dashboards | S7 (governance dashboard) · S8 (usage-monitoring dashboard) | One dashboard platform with two views, sharing the event schema defined in `event-audit-schema.md` |
+
+---
+
+## Documentation Standard
+
+Each member's design document follows the section structure of [CONTRIBUTOR-TEMPLATE.md](CONTRIBUTOR-TEMPLATE.md): Scope → Objective → Design / Architecture → Interfaces Exposed → Interfaces Consumed → Data Model Additions → DPDP / GDPR Mapping → Research Notes & Benchmarks → Open Questions / Risks → Status Log. A consistent structure keeps all four documents comparable during cross-review: a reviewer finds "what this exposes" and "open questions" in the same place in every document.
+
+Design documents currently live under person-named files, as shown in [Repository Structure](#repository-structure).
+
+
+---
+
+## Tech Stack
+
+| Layer | Technology | Primary use within Team B |
+|---|---|---|
+| Backend services | Python, FastAPI | All modules (S5–S8) |
+| Database | PostgreSQL | Consent records, policies, audit metadata (S5–S8) |
+| Identity & auth | Keycloak, OAuth 2.0, OpenID Connect, JWT | All modules (S5–S8) |
+| Eventing | Apache Kafka / RabbitMQ | Events emitted by S5, S6, S8; consumed by S7 |
+| Frontend | React / Next.js, Tailwind CSS | S7 dashboard |
+| Caching | Redis | S7 dashboard |
+| Monitoring | Prometheus, Grafana, ELK | S8 usage tracking & monitoring |
+| Object storage | MinIO / AWS S3 | Multimodal media — referenced, not stored, by Team B |
+| Tooling | Docker, Git/GitHub, Swagger/OpenAPI, PyTest, Postman | All modules (S5–S8) |
+
+---
+
+## Timeline & Milestones
+
+| Milestone | Week | Deliverable |
+|---|---|---|
+| M1 | Week 2 | Architecture, design specifications, and tech stack finalized |
+| M2 | Week 4 | Core modules & APIs — Team B scope: consent revocation APIs and the biometric consent prototype |
+| M3 | Week 8 | Mid-term integrated prototype |
+| M4 | Week 12 | Full platform integration |
+| M5 | Week 16 | Final platform, documentation, and research outputs |
+
+**Team B weekly beats:**
+
+| Week | Focus |
+|---|---|
+| W2 | Design briefs & interface contracts |
+| W3 | Database implementation, API design, module repositories |
+| W4 | Consent revocation APIs + biometric consent prototype |
+| W5 | Data lifecycle + monitoring modules |
+| W6 | Policy enforcement + consent analytics |
+| W9 | Retention enforcement + governance dashboards |
+
+---
+
+## Regulatory Quick Reference
+
+| Obligation | DPDP 2023 | GDPR | Primarily addressed by |
+|---|---|---|---|
+| Consent & withdrawal | §6, including withdrawal (verify against the bare act) | Art. 7; withdrawal under Art. 7(3) | S5, S6 |
+| Purpose limitation | §§4–6 — processing only for the specified lawful purpose (verify against the bare act) | Art. 5(1)(b) | S8 (enforcement at point of use), S5 (purpose-change events) |
+| Right to erasure | §12 — correction and erasure (verify against the bare act) | Art. 17 | S5 + S8 (shared purge orchestrator) |
+| Restriction of processing | No direct equivalent; nearest analogue is consent withdrawal under §6 (verify against the bare act) | Art. 18 | S5 (Suspended state), S6 |
+| Records of processing activities | Data-fiduciary accountability obligations under §8 (verify against the bare act) | Art. 30 | S7 |
+| Privacy by design | §8 obligations, including security safeguards (verify against the bare act) | Art. 25 | All four modules |
