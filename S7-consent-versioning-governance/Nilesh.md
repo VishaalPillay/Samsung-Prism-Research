@@ -35,10 +35,11 @@ Aegis Agent · AI-Driven Consent Governance & Privacy Enforcement Platform
 | 6 | [Consent Analytics Engine & Metric Derivation](#6-consent-analytics-engine--metric-derivation) |
 | 7 | [Granular Auditing & Reporting Tiers](#7-granular-auditing--reporting-tiers) |
 | 8 | [Data Model & a Robust Versioned Schema](#8-data-model--a-robust-versioned-schema) |
-| 9 | [Open Problem & Research Direction](#9-open-problem--research-direction) |
-| 10 | [Regulatory Mapping](#10-regulatory-mapping) |
-| 11 | [Glossary](#11-glossary) |
-| 12 | [Overall Workflow: Policy Update to Dashboard Refresh](#12-overall-workflow-policy-update-to-dashboard-refresh) |
+| 9 | [Week 2 Deliverable: Versioning Model & Wireframes](#9-week-2-deliverable-versioning-model--dashboard-wireframes) |
+| 10| [Open Problem & Research Direction](#10-open-problem--research-direction) |
+| 11| [Regulatory Mapping](#11-regulatory-mapping) |
+| 12| [Glossary](#12-glossary) |
+| 13| [Overall Workflow: Policy Update to Dashboard Refresh](#13-overall-workflow-policy-update-to-dashboard-refresh) |
 
 ---
 
@@ -278,7 +279,94 @@ The dashboard validates these transactional blocks against the append-only recor
 
 ---
 
-## 9. Open Problem & Research Direction
+## 9. Week 2 Deliverable: Versioning Model & Dashboard Wireframes
+
+This section fulfills the Week 2 requirements for establishing the conceptual foundation of the version control system and drafting the user interface architecture for the DPO.
+
+### 9.1 Consent Versioning Conceptual Model (Entity-Relationship)
+
+The versioning model ensures that every consent record is strictly bound to the exact legal language active at the time of signing. 
+
+```mermaid
+erDiagram
+    PRIVACY_POLICY ||--|{ POLICY_VERSION : "has historical iterations"
+    POLICY_VERSION ||--o{ CONSENT_RECORD : "binds user agreement to"
+    
+    PRIVACY_POLICY {
+        UUID policy_id PK
+        String project_name
+        String regulatory_framework
+    }
+    
+    POLICY_VERSION {
+        UUID version_id PK
+        UUID policy_id FK
+        String version_number "e.g., v1.2"
+        String status "ACTIVE, DEPRECATED, RE_CONSENT_REQ"
+        String policy_hash "SHA-256 of text block"
+        DateTime published_at
+    }
+    
+    CONSENT_RECORD {
+        UUID consent_id PK
+        UUID version_id FK
+        String subject_id
+        String consent_tier "General, PII, Biometric"
+        String status "Active, Revoked, Expired"
+        String audit_hash
+    }
+```
+
+### 9.2 DPO Governance Dashboard Wireframes
+
+Below is the structural blueprint for the React/Next.js frontend. The interface is designed for high-density information scanning by Compliance Officers.
+
+#### View 1: Global Health & Analytics Overview
+```text
++-----------------------------------------------------------------------------------+
+|  [Logo] PRISM CMP              | Dashboard | Policy Versions | Audit Logs | [User] |
++-----------------------------------------------------------------------------------+
+|  GLOBAL COMPLIANCE HEALTH                                     [Export DPDP Report]|
++-----------------------------------------------------------------------------------+
+|  +--------------------+  +--------------------+  +-----------------------------+  |
+|  | Consent Capture    |  | SLA Purge Rate     |  | Total Active Subjects       |  |
+|  | 99.4%              |  | 100%               |  | 14,203                      |  |
+|  | ▲ 0.2% this week   |  | (All < 24 hrs)     |  | 8,000 PII | 6,203 Biometric |  |
+|  +--------------------+  +--------------------+  +-----------------------------+  |
++-----------------------------------------------------------------------------------+
+|  CONSENT LIFECYCLE TRENDS (Line Chart)                                            |
+|  |                                                                                |
+|  |   /\      /---  (Active)                                                       |
+|  |  /  \----/                                                                     |
+|  | /             ___ (Revoked)                                                    |
+|  |/___/\________/___                                                              |
+|  +-----------------------------------------------------------------------------+  |
++-----------------------------------------------------------------------------------+
+```
+
+#### View 2: Policy Version Control & Re-Consent Management
+```text
++-----------------------------------------------------------------------------------+
+|  POLICY VERSION MANAGEMENT                                  [ + Draft New Policy ]|
++-----------------------------------------------------------------------------------+
+|  Active Policies                                                                  |
+|  -------------------------------------------------------------------------------  |
+|  Project       | Version | Status   | Active Consents | Actions                   |
+|  SEED Lab R&D  | v2.1    | ACTIVE   | 8,402           | [View Diff] [Deprecate]   |
+|  Voice AI Set  | v1.0    | ACTIVE   | 3,100           | [View Diff] [Deprecate]   |
+|  -------------------------------------------------------------------------------  |
+|                                                                                   |
+|  Re-Consent Pipeline (Pending Action)                                             |
+|  -------------------------------------------------------------------------------  |
+|  Legacy Version | Impacted Subjects | Migration Status | Actions                  |
+|  SEED Lab v1.5  | 1,204             | 45% Re-consented | [Send Alerts] [Purge]    |
+|  SEED Lab v2.0  | 89                | 90% Re-consented | [Send Alerts] [Purge]    |
++-----------------------------------------------------------------------------------+
+```
+
+---
+
+## 10. Open Problem & Research Direction
 
 > [!NOTE]
 > **Limitation.** Real-time tracking across thousands of distributed clients introduces processing gaps, meaning data metrics can experience synchronization skew.
@@ -291,7 +379,7 @@ The dashboard validates these transactional blocks against the append-only recor
 
 ---
 
-## 10. Regulatory Mapping
+## 11. Regulatory Mapping
 
 | Core Obligation | DPDP Act 2023 Alignment | GDPR Equivalence | Module Implementation Coverage |
 |---|---|---|---|
@@ -301,7 +389,7 @@ The dashboard validates these transactional blocks against the append-only recor
 
 ---
 
-## 11. Glossary
+## 12. Glossary
 
 | Term | Full form | One-line meaning |
 |------|-----------|------------------|
@@ -314,7 +402,7 @@ The dashboard validates these transactional blocks against the append-only recor
 
 ---
 
-## 12. Overall Workflow: Policy Update to Dashboard Refresh
+## 13. Overall Workflow: Policy Update to Dashboard Refresh
 
 The system lifecycle journey from the moment an administrator alters a privacy policy rule to the live metrics dashboard updating automatically across the network interface.
 
