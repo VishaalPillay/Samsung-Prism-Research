@@ -239,3 +239,111 @@ In the successful execution path, biometric media access is permitted only after
 ---
 
 **End of Week 2 Documentation**
+
+---
+
+# Chapter 5 - Policy Decision Workflow
+
+![Policy Decision Workflow](images/policy_decision_workflow.png)
+
+## 5.1 Policy Decision Workflow Overview
+
+The Policy Decision Workflow defines how the S6 module evaluates a biometric access request before allowing the enterprise application to access biometric data. The workflow is centered on the Policy Decision Engine, which receives validated request details from the Biometric Consent Manager and applies consent-aware authorization rules.
+
+The decision process begins by reading the user's consent metadata from PostgreSQL. The Policy Decision Engine checks whether consent exists, whether the consent status is active, and whether the consent has expired. If the consent record is missing, revoked, inactive, or expired, the request cannot proceed without corrective action.
+
+After validating the consent state, the engine evaluates the processing purpose provided in the access request. The requested purpose must match the purpose recorded in the consent metadata, such as authentication, verification, or secure identity validation. This ensures that biometric data is used only for the purpose approved by the user.
+
+The Policy Decision Engine then reads applicable policy rules from PostgreSQL. These rules define organizational constraints such as permitted applications, allowed operations, access conditions, retention limits, and compliance requirements. The engine compares the incoming request against these rules and generates a final authorization decision.
+
+The resulting decision is returned to the Access Enforcement Module, which applies the outcome and sends the appropriate response to the enterprise application. The decision may allow access, deny access, or require the user to provide fresh consent before biometric processing can continue.
+
+## 5.2 Authorization Outcomes
+
+| Authorization Outcome | Description |
+| --- | --- |
+| **ALLOW** | The request satisfies authentication, consent, purpose, and policy requirements. Biometric access is permitted. |
+| **DENY** | The request violates consent, purpose, or policy conditions. Biometric access is blocked. |
+| **RE-CONSENT REQUIRED** | The existing consent is missing, expired, revoked, or no longer valid for the requested purpose. Fresh user consent is required. |
+
+---
+
+# Chapter 6 - Deployment Architecture
+
+![Deployment Architecture](images/deployment_architecture.png)
+
+## 6.1 Deployment Overview
+
+The Deployment Architecture defines how the S6 - Biometric Consent & Policy Enforcement Framework is deployed across application, data, identity, messaging, and storage nodes. The deployment model follows a modular service-oriented structure so that each infrastructure component can be scaled, secured, and maintained independently.
+
+The FastAPI application server hosts the S6 service and exposes REST endpoints for biometric consent validation, policy evaluation, and access enforcement. It acts as the primary runtime entry point for enterprise applications that need consent-aware biometric authorization.
+
+PostgreSQL stores consent metadata, policy definitions, audit references, and authorization-related records. The S6 service reads from PostgreSQL during consent validation and policy evaluation, and writes audit-related metadata when authorization decisions are generated.
+
+Kafka or RabbitMQ provides asynchronous messaging for audit events, enforcement events, and system activity notifications. The Access Enforcement Module publishes authorization outcomes to the message broker so that downstream monitoring, compliance, and logging services can consume them without blocking the runtime request flow.
+
+Keycloak is deployed as the identity and access management node. It authenticates users, issues JWT access tokens, and provides OAuth 2.0 based security integration for requests entering the S6 service.
+
+The Enterprise Application represents the consuming business system that initiates biometric access requests. It communicates with Keycloak for authentication, sends authorized requests to the FastAPI application server, and receives the final authorization response from the S6 framework.
+
+MinIO or AWS S3 is used as the object storage layer for biometric media. The S6 module does not directly process or store biometric media files. Instead, it authorizes access based on consent and policy metadata, after which the enterprise application retrieves permitted biometric objects from storage.
+
+## 6.2 Deployment Communication
+
+The Enterprise Application first communicates with Keycloak to authenticate the user and obtain a JWT access token. The token is then included in requests sent to the FastAPI application server. The FastAPI server validates the token, processes the request through the Biometric Consent Manager, and queries PostgreSQL for consent and policy metadata.
+
+Once consent and policy evaluation is complete, the Policy Decision Engine sends the authorization decision to the Access Enforcement Module. The Access Enforcement Module returns the final response to the Enterprise Application and publishes an audit event to Kafka or RabbitMQ. If access is allowed, the Enterprise Application retrieves the authorized biometric media from MinIO or AWS S3 according to the approved request context.
+
+---
+
+# Chapter 7 - Biometric Authorization Sequence Diagram
+
+![Biometric Authorization Sequence Diagram](images/sequence_diagram.png)
+
+## 7.1 Sequence Overview
+
+The Biometric Authorization Sequence Diagram describes the successful runtime interaction between the user, identity provider, S6 service components, database, messaging layer, enterprise application, and object storage. The sequence ensures that biometric access is granted only after authentication, consent validation, policy evaluation, and enforcement are completed.
+
+## 7.2 Successful Authorization Sequence
+
+1. The user initiates a biometric access request through the Enterprise Application.
+2. The Enterprise Application redirects or forwards the authentication request to Keycloak.
+3. Keycloak authenticates the user and issues a JWT access token.
+4. The Enterprise Application sends the biometric authorization request to the REST API Layer with the JWT token and requested processing purpose.
+5. The REST API Layer validates the JWT token and extracts the authenticated user identity and authorization claims.
+6. The REST API Layer forwards the request to the Biometric Consent Manager.
+7. The Biometric Consent Manager queries PostgreSQL to retrieve the user's biometric consent metadata.
+8. PostgreSQL returns the consent record, including consent status, approved purpose, validity period, expiry information, and related metadata.
+9. The Biometric Consent Manager verifies that the consent exists, is active, has not expired, and matches the requested processing purpose.
+10. The validated request context is forwarded to the Policy Decision Engine.
+11. The Policy Decision Engine queries PostgreSQL to retrieve applicable policy rules for the user, enterprise application, biometric operation, and processing purpose.
+12. PostgreSQL returns the relevant policy rules and authorization constraints.
+13. The Policy Decision Engine evaluates consent metadata, consent expiry, processing purpose, and policy rules to generate an authorization decision.
+14. For a successful request, the Policy Decision Engine returns an ALLOW decision to the Access Enforcement Module.
+15. The Access Enforcement Module applies the ALLOW decision and prepares the authorization response.
+16. The Access Enforcement Module publishes an audit event and enforcement event to Kafka.
+17. Kafka receives the event and makes it available for downstream audit, monitoring, and compliance consumers.
+18. The REST API Layer returns the successful authorization response to the Enterprise Application.
+19. The Enterprise Application uses the approved authorization context to request the permitted biometric media from MinIO or AWS S3.
+20. MinIO or AWS S3 returns the authorized biometric object to the Enterprise Application.
+21. The Enterprise Application completes the biometric workflow and presents the result to the user.
+
+In this successful sequence, each component has a defined responsibility. Keycloak handles authentication, the REST API Layer validates the request, the Biometric Consent Manager verifies consent, PostgreSQL provides trusted metadata, the Policy Decision Engine generates the authorization outcome, the Access Enforcement Module applies the decision, Kafka records the event stream, and MinIO or AWS S3 serves only the biometric media that has been authorized for access.
+
+---
+
+# Week 2 Progress Summary
+
+## Completed
+
+- High-Level Architecture
+- Component Architecture
+- Runtime Workflow
+- Runtime Exception Workflow
+- Policy Decision Workflow
+- Deployment Architecture
+- Sequence Diagram
+
+## Outcome
+
+Week 2 successfully completed the complete Software Design phase for the S6 - Biometric Consent & Policy Enforcement Framework. The resulting design documentation defines the architecture, component interactions, runtime behavior, deployment model, and authorization workflow that will guide implementation during the next development phase.
