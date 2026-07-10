@@ -76,8 +76,49 @@ The architecture is designed to:
 
 ## 2. High-Level Architecture
 
-![High-Level Architecture](images/high_level_architecture..jpg)
+```mermaid
+flowchart TB
+    User["User"]
+    Keycloak["Keycloak"]
 
+    User -- Authenticate --> Keycloak
+    Keycloak -- JWT access token --> RESTAPI
+
+    subgraph S6["S6 - Biometric Consent & Policy Enforcement Framework"]
+        direction TB
+        RESTAPI["REST API layer (FastAPI)"]
+        ConsentMgr["Biometric Consent Manager"]
+        PolicyEngine["Policy Decision Engine"]
+        AccessEnforce["Access Enforcement Module"]
+
+        RESTAPI --> ConsentMgr
+        ConsentMgr --> PolicyEngine
+        PolicyEngine -- "Authorization decision" --> AccessEnforce
+    end
+
+    Postgres[("PostgreSQL")]
+    Kafka["Kafka / RabbitMQ"]
+    EnterpriseApp["Enterprise Application"]
+    MinIO[("MinIO / AWS S3")]
+
+    ConsentMgr <-- "Read / write consent metadata" --> Postgres
+    PolicyEngine <-- "Read policy rules" --> Postgres
+    AccessEnforce -- "Publish audit & enforcement events" --> Kafka
+    AccessEnforce -- "Authorization response" --> EnterpriseApp
+    EnterpriseApp -- "Retrieve authorized biometric media" --> MinIO
+
+    classDef external fill:#F1EFE8,stroke:#5F5E5A,color:#2C2C2A,font-weight:bold;
+    classDef auth fill:#EAF3DE,stroke:#3B6D11,color:#173404,font-weight:bold;
+    classDef core fill:#E6F1FB,stroke:#185FA5,color:#042C53,font-weight:bold;
+    classDef infra fill:#FAEEDA,stroke:#854F0B,color:#412402,font-weight:bold;
+    classDef app fill:#EEEDFE,stroke:#534AB7,color:#26215C,font-weight:bold;
+
+    class User external;
+    class Keycloak auth;
+    class RESTAPI,ConsentMgr,PolicyEngine,AccessEnforce core;
+    class Postgres,Kafka,MinIO infra;
+    class EnterpriseApp app;
+```
 ### 2.1 Architecture Workflow
 
 The architecture follows a sequential request-processing pipeline consisting of authentication, consent validation, policy evaluation, and enforcement.
@@ -131,8 +172,31 @@ S6 does not store or directly access biometric media. It authorizes access to bi
 
 ## 3. Component Architecture
 
-![Component Architecture](images/component_architecture..jpg)
+```mermaid
+flowchart LR
+    subgraph S6["S6 - Biometric Consent & Policy Enforcement Framework"]
+        direction LR
+        RESTAPI["<<component>>\nREST API layer (FastAPI)\n--------------------\nReceives REST requests\nValidates requests\nRoutes requests to business services"]
+        ConsentMgr["<<component>>\nBiometric Consent Manager\n--------------------\nRegister consent\nUpdate consent\nValidate consent\nRetrieve consent\nCheck consent expiry"]
+        PolicyEngine["<<component>>\nPolicy Decision Engine\n--------------------\nEvaluate consent status\nValidate processing purpose\nRead policy rules\nGenerate authorization decision\n--------------------\nOutput: Allow / Deny / Mask / Delete / Re-Consent Required"]
+        AccessEnforce["<<component>>\nAccess Enforcement Module\n--------------------\nExecute authorization decision\nGenerate authorization response\nPublish audit events\nPublish enforcement events"]
 
+        RESTAPI --> ConsentMgr --> PolicyEngine --> AccessEnforce
+    end
+
+    Postgres[("PostgreSQL")]
+    Kafka["Kafka / RabbitMQ"]
+
+    ConsentMgr <--> Postgres
+    PolicyEngine <--> Postgres
+    AccessEnforce --> Kafka
+
+    classDef core fill:#E6F1FB,stroke:#185FA5,color:#042C53,font-weight:bold,text-align:left;
+    classDef infra fill:#FAEEDA,stroke:#854F0B,color:#412402,font-weight:bold;
+
+    class RESTAPI,ConsentMgr,PolicyEngine,AccessEnforce core;
+    class Postgres,Kafka infra;
+```
 ### 3.1 Component Responsibilities
 
 The S6 module is organized into independent components with clearly defined responsibilities. Each component participates in the consent validation and access enforcement pipeline while maintaining separation of concerns.
@@ -205,8 +269,33 @@ Key responsibilities include:
 
 ## 4. Runtime Workflow: Successful Execution Path
 
-![Runtime Workflow](images/runtime_workflow_success..png)
+```mermaid
+flowchart TD
+    Start((Start))
+    A1[User submits biometric access request]
+    A2[REST API layer receives request]
+    A3[Validate JWT access token]
+    A4[Biometric consent manager]
+    A5[Retrieve consent metadata from PostgreSQL]
+    A6[Validate consent]
+    A7[Policy decision engine]
+    A8[Read policy rules from PostgreSQL]
+    A9[Evaluate authorization policy]
+    A10[Access enforcement module]
+    A11[Generate authorization response]
+    A12[Publish audit event to Kafka / RabbitMQ]
+    A13[Enterprise application]
+    A14[Retrieve authorized biometric media from MinIO / AWS S3]
+    End(((End)))
 
+    Start --> A1 --> A2 --> A3 --> A4 --> A5 --> A6 --> A7 --> A8 --> A9 --> A10 --> A11 --> A12 --> A13 --> A14 --> End
+
+    classDef activity fill:#E6F1FB,stroke:#185FA5,color:#042C53,font-weight:bold;
+    classDef terminal fill:#F1EFE8,stroke:#5F5E5A,color:#2C2C2A,font-weight:bold;
+
+    class A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12,A13,A14 activity;
+    class Start,End terminal;
+```
 ### 4.1 Workflow Overview
 
 The successful runtime workflow defines the execution path followed when a biometric access request is authenticated, consent is valid, applicable policy rules allow access, and the enterprise application is authorized to retrieve biometric media.
@@ -244,8 +333,63 @@ In the successful execution path, biometric media access is permitted only after
 
 # Chapter 5 - Policy Decision Workflow
 
-![Policy Decision Workflow](images/policy_decision_workflow.jpg)
+```mermaid
+flowchart TD
+    Start((Start))
+    A1[Receive validated request]
+    A2[Load consent metadata]
+    D1{Consent active?}
+    Deny1[Decision = DENY]
+    Ret1[Return authorization decision]
+    End1(((End)))
 
+    A3[Check consent expiry]
+    D2{Consent expired?}
+    Reco[Decision = RE-CONSENT REQUIRED]
+    Ret2[Return authorization decision]
+    End2(((End)))
+
+    A4[Validate processing purpose]
+    D3{Purpose authorized?}
+    Deny2[Decision = DENY]
+    Ret3[Return authorization decision]
+    End3(((End)))
+
+    A5[Load policy rules]
+    A6[Evaluate authorization policies]
+    D4{Policy satisfied?}
+    Deny3[Decision = DENY]
+    Ret4[Return authorization decision]
+    End4(((End)))
+
+    Allow[Decision = ALLOW]
+    Ret5[Return authorization decision]
+    End5(((End)))
+
+    Start --> A1 --> A2 --> D1
+    D1 -- NO --> Deny1 --> Ret1 --> End1
+    D1 -- YES --> A3 --> D2
+    D2 -- YES --> Reco --> Ret2 --> End2
+    D2 -- NO --> A4 --> D3
+    D3 -- NO --> Deny2 --> Ret3 --> End3
+    D3 -- YES --> A5 --> A6 --> D4
+    D4 -- NO --> Deny3 --> Ret4 --> End4
+    D4 -- YES --> Allow --> Ret5 --> End5
+
+    classDef activity fill:#E6F1FB,stroke:#185FA5,color:#042C53,font-weight:bold;
+    classDef decision fill:#FAEEDA,stroke:#854F0B,color:#412402,font-weight:bold;
+    classDef deny fill:#FAECE7,stroke:#B23A2E,color:#5A160F,font-weight:bold;
+    classDef reconsent fill:#FCEFD8,stroke:#8A5A0B,color:#432D06,font-weight:bold;
+    classDef allow fill:#E7F5EA,stroke:#1E7A34,color:#0F3D1B,font-weight:bold;
+    classDef terminal fill:#F1EFE8,stroke:#5F5E5A,color:#2C2C2A,font-weight:bold;
+
+    class A1,A2,A3,A4,A5,A6 activity;
+    class D1,D2,D3,D4 decision;
+    class Deny1,Ret1,Deny2,Ret3,Deny3,Ret4 deny;
+    class Reco,Ret2 reconsent;
+    class Allow,Ret5 allow;
+    class Start,End1,End2,End3,End4,End5 terminal;
+```
 ## 5.1 Policy Decision Workflow Overview
 
 The Policy Decision Workflow defines how the S6 module evaluates a biometric access request before allowing the enterprise application to access biometric data. The workflow is centered on the Policy Decision Engine, which receives validated request details from the Biometric Consent Manager and applies consent-aware authorization rules.
@@ -270,8 +414,45 @@ The resulting decision is returned to the Access Enforcement Module, which appli
 
 # Chapter 6 - Deployment Architecture
 
-![Deployment Architecture](images/deployment_architecture.jpg)
+```mermaid
+flowchart LR
+    Client["Client / Browser"]
+    Keycloak["Keycloak authentication server"]
 
+    Client -- "Authenticate user" --> Keycloak
+
+    subgraph FastAPI["FastAPI application server"]
+        direction TB
+        RESTAPI["REST API layer"]
+        ConsentMgr["Biometric consent manager"]
+        PolicyEngine["Policy decision engine"]
+        AccessEnforce["Access enforcement module"]
+    end
+
+    Keycloak -- "JWT access token" --> FastAPI
+
+    Postgres[("PostgreSQL\nConsent metadata / policy rules")]
+    Kafka["Kafka / RabbitMQ\nAudit events / policy events"]
+    EnterpriseApp["Enterprise application"]
+    MinIO[("MinIO / AWS S3\nBiometric media storage")]
+
+    FastAPI <-- "Read / write consent metadata\nRead policy rules" --> Postgres
+    FastAPI -- "Publish audit events" --> Kafka
+    FastAPI -- "Authorization decision" --> EnterpriseApp
+    EnterpriseApp -- "Retrieve authorized biometric media" --> MinIO
+
+    classDef client fill:#F1EFE8,stroke:#5F5E5A,color:#000000,font-weight:bold;
+    classDef auth fill:#EAF3DE,stroke:#3B6D11,color:#000000,font-weight:bold;
+    classDef app fill:#E6F1FB,stroke:#185FA5,color:#000000,font-weight:bold;
+    classDef infra fill:#FAEEDA,stroke:#854F0B,color:#000000,font-weight:bold;
+    classDef enterprise fill:#EEEDFE,stroke:#534AB7,color:#000000,font-weight:bold;
+
+    class Client client;
+    class Keycloak auth;
+    class RESTAPI,ConsentMgr,PolicyEngine,AccessEnforce app;
+    class Postgres,Kafka,MinIO infra;
+    class EnterpriseApp enterprise;
+```
 ## 6.1 Deployment Overview
 
 The Deployment Architecture defines how the S6 - Biometric Consent & Policy Enforcement Framework is deployed across application, data, identity, messaging, and storage nodes. The deployment model follows a modular service-oriented structure so that each infrastructure component can be scaled, secured, and maintained independently.
@@ -298,8 +479,40 @@ Once consent and policy evaluation is complete, the Policy Decision Engine sends
 
 # Chapter 7 - Biometric Authorization Sequence Diagram
 
-![Biometric Authorization Sequence Diagram](images/sequence_diagram.png)
+```mermaid
+sequenceDiagram
+    autonumber
+    participant User
+    participant Keycloak
+    participant RESTAPI as REST API Layer
+    participant ConsentMgr as Biometric Consent Manager
+    participant Postgres as PostgreSQL
+    participant PolicyEngine as Policy Decision Engine
+    participant AccessEnforce as Access Enforcement Module
+    participant Kafka as Kafka / RabbitMQ
+    participant EnterpriseApp as Enterprise Application
+    participant MinIO as MinIO / AWS S3
 
+    User->>User: Initiate biometric access request
+    User->>Keycloak: Authenticate
+    Keycloak-->>User: JWT access token
+    User->>RESTAPI: Biometric authorization request
+    RESTAPI->>RESTAPI: Validate JWT token
+    RESTAPI->>ConsentMgr: Forward request
+    ConsentMgr->>Postgres: Retrieve consent metadata
+    Postgres-->>ConsentMgr: Consent metadata
+    ConsentMgr->>PolicyEngine: Forward validated request
+    PolicyEngine->>Postgres: Retrieve policy rules
+    Postgres-->>PolicyEngine: Policy rules
+    PolicyEngine->>PolicyEngine: Evaluate authorization policy
+    PolicyEngine-->>AccessEnforce: Return ALLOW decision
+    AccessEnforce->>AccessEnforce: Process authorization decision
+    AccessEnforce->>Kafka: Publish audit event
+    AccessEnforce-->>EnterpriseApp: Authorization response
+    EnterpriseApp->>MinIO: Retrieve authorized biometric media
+    MinIO-->>EnterpriseApp: Biometric media
+    EnterpriseApp-->>User: Deliver authorized content
+```
 ## 7.1 Sequence Overview
 
 The Biometric Authorization Sequence Diagram describes the successful runtime interaction between the user, identity provider, S6 service components, database, messaging layer, enterprise application, and object storage. The sequence ensures that biometric access is granted only after authentication, consent validation, policy evaluation, and enforcement are completed.
