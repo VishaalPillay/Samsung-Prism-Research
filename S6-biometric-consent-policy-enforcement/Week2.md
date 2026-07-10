@@ -238,13 +238,13 @@ In the successful execution path, biometric media access is permitted only after
 
 ---
 
-**End of Week 2 Documentation**
+
 
 ---
 
 # Chapter 5 - Policy Decision Workflow
 
-![Policy Decision Workflow](images/policy_decision_workflow.png)
+![Policy Decision Workflow](images/policy_decision_workflow.jpg)
 
 ## 5.1 Policy Decision Workflow Overview
 
@@ -270,7 +270,7 @@ The resulting decision is returned to the Access Enforcement Module, which appli
 
 # Chapter 6 - Deployment Architecture
 
-![Deployment Architecture](images/deployment_architecture.png)
+![Deployment Architecture](images/deployment_architecture.jpg)
 
 ## 6.1 Deployment Overview
 
