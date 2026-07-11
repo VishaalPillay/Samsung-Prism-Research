@@ -25,7 +25,7 @@
 | **Primary Deliverable** | Consent-aware backend design for runtime biometric authorization |
 | **Author** | `P.Srikesh` |
 | **Repository** | `biometric-policy-enforcement` |
-| **Document Type** | Engineering knowledge document |
+
 
 > [!IMPORTANT]
 > S6 owns biometric consent lifecycle management, runtime policy decisioning, and access enforcement for biometric data. It consumes authenticated identity and consent inputs from platform services, but it does not perform identity verification, consent mapping, unrelated data discovery, enterprise AI governance, or audit-ledger implementation.
