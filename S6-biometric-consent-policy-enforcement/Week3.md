@@ -339,12 +339,6 @@ Week 3 successfully established the backend infrastructure required to support t
 
 With this foundation in place, the project is now prepared for the next implementation phase.
 
----
 
-<div align="center">
 
-**Samsung PRISM Research Project — Aegis Agent Platform**
-Module S6 · Biometric Consent & Policy Enforcement Framework
-Week 3 Technical Implementation Report
 
-</div>
