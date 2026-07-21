@@ -11,7 +11,7 @@
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.x-red)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-blue?logo=postgresql)
 ![Alembic](https://img.shields.io/badge/Alembic-Migrations-orange)
-![Status](https://img.shields.io/badge/Status-Week%203%20Complete-success)
+
 
 </div>
 
@@ -280,7 +280,7 @@ http://127.0.0.1:8000/docs
 
 ---
 
-# ✅ Week 3 Deliverables
+# ✅ Week 3 
 
 - ✔ FastAPI backend initialization
 - ✔ PostgreSQL integration
@@ -291,19 +291,8 @@ http://127.0.0.1:8000/docs
 - ✔ Environment configuration
 - ✔ Backend startup verification
 
----
 
-# 🚧 Future Scope
 
-The following components are intentionally excluded from Week 3 and will be implemented in subsequent phases:
-
-- Biometric Consent Manager
-- Policy Decision Engine
-- Access Enforcement Module
-- JWT Authentication
-- REST API Endpoints
-- Authorization Workflow
-- Audit Event Publishing
 
 ---
 
