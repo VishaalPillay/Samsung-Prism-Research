@@ -1,0 +1,46 @@
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Python
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+pip-wheel-metadata/
+
+# Tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+coverage.xml
+htmlcov/
+.hypothesis/
+
+# Environment and local secrets
+.env
+.env.*
+!.env.example
+
+# Logs and local runtime files
+*.log
+*.sqlite3
+*.db
+
+# IDEs
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
