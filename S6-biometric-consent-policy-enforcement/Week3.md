@@ -3,7 +3,6 @@
 ![Project](https://img.shields.io/badge/Project-Aegis%20Agent-blueviolet)
 ![Module](https://img.shields.io/badge/Module-S6%20Biometric%20Consent-blue)
 ![Phase](https://img.shields.io/badge/Phase-Backend%20Foundation-orange)
-![Status](https://img.shields.io/badge/Status-Completed-success)
 ![Week](https://img.shields.io/badge/Week-3-informational)
 
 **Project:** Samsung PRISM Research Project
