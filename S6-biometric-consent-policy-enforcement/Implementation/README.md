@@ -222,7 +222,7 @@ pip install -r requirements.txt
 
 ---
 
-# 🔧 Environment Configuration
+#  Environment Configuration
 
 Create a local environment file.
 
