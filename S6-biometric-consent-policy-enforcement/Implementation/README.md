@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🔐 Biometric Consent & Policy Enforcement Framework
+#  Biometric Consent & Policy Enforcement Framework
 
 ### Samsung PRISM Research Project
 
@@ -17,7 +17,7 @@
 
 ---
 
-# 📖 Overview
+#  Overview
 
 This repository contains the **Week 3 implementation** of the **Biometric Consent & Policy Enforcement Framework** developed as part of the **Samsung PRISM Research Program**.
 
@@ -27,7 +27,7 @@ The implementation focuses exclusively on backend infrastructure and intentional
 
 ---
 
-# 🎯 Week 3 Objectives
+#  Week 3 Objectives
 
 - Initialize a scalable FastAPI backend project
 - Configure PostgreSQL database connectivity
@@ -40,7 +40,7 @@ The implementation focuses exclusively on backend infrastructure and intentional
 
 ---
 
-# 🏗️ System Architecture
+#  System Architecture
 
 ```
                 FastAPI Application
@@ -61,7 +61,7 @@ The implementation focuses exclusively on backend infrastructure and intentional
 
 ---
 
-# 📂 Project Structure
+#  Project Structure
 
 ```text
 Implementation/
@@ -104,7 +104,7 @@ Implementation/
 
 ---
 
-# 🛠️ Technology Stack
+#  Technology Stack
 
 | Layer | Technology |
 |--------|------------|
@@ -118,7 +118,7 @@ Implementation/
 
 ---
 
-# 🗄️ Database Design
+#  Database Design
 
 The database layer consists of three primary entities:
 
@@ -136,7 +136,7 @@ Maintains immutable audit records for future authorization decisions and complia
 
 ---
 
-# ⚙️ Backend Components
+#  Backend Components
 
 ## FastAPI Application
 
@@ -192,7 +192,7 @@ Creates:
 
 ---
 
-# 🚀 Getting Started
+#  Getting Started
 
 ## Create Virtual Environment
 
@@ -244,7 +244,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES=30
 
 ---
 
-# 🗃️ Database Migration
+#  Database Migration
 
 Generate migration:
 
@@ -260,7 +260,7 @@ alembic upgrade head
 
 ---
 
-# ▶️ Running the Application
+#  Running the Application
 
 ```bash
 python -m uvicorn app.main:app --reload
@@ -280,7 +280,7 @@ http://127.0.0.1:8000/docs
 
 ---
 
-# ✅ Week 3 
+#  Week 3 
 
 - ✔ FastAPI backend initialization
 - ✔ PostgreSQL integration
@@ -300,6 +300,6 @@ http://127.0.0.1:8000/docs
 
 ### Samsung PRISM Research Project
 
-**Week 3 Milestone Completed Successfully** 🚀
+
 
 </div>
