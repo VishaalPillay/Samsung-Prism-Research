@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 490" width="680" height="490" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Selective audio revocation via crypto-shredding, showing three classes of downstream outcome</title>
+  <desc>Revoking only the audio modality destroys the audio data encryption keys for that subject and project, an order-one operation on keys rather than order-n on assets. Assets encrypted under the audio key die instantly, including audio files, voiceprint embeddings and transcripts. Video needs re-encoding because its audio track must be stripped while the visual stream survives. Images, text and the video visual stream are unaffected.</desc>
+  <rect x="0" y="0" width="680" height="490" fill="#ffffff"/>
+
+  <text x="340" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#1f2328">Selective revocation of a single modality</text>
+
+  <rect x="190" y="46" width="300" height="56" rx="8" fill="#fee4e2" stroke="#b42318" stroke-width="1"/>
+  <text x="340" y="70" text-anchor="middle" font-size="13" font-weight="600" fill="#7a271a">Revoke audio only</text>
+  <text x="340" y="89" text-anchor="middle" font-size="11" fill="#7a271a">Other modalities retained</text>
+
+  <line x1="340" y1="102" x2="340" y2="132" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="335,132 345,132 340,140" fill="#57606a"/>
+
+  <rect x="150" y="140" width="380" height="56" rx="8" fill="#fee4e2" stroke="#b42318" stroke-width="1"/>
+  <text x="340" y="164" text-anchor="middle" font-size="13" font-weight="600" fill="#7a271a">Destroy audio data encryption keys</text>
+  <text x="340" y="183" text-anchor="middle" font-size="11" fill="#7a271a">Crypto-shred: order of keys, not order of assets</text>
+
+  <path d="M340 196 L340 216 L90 216 L90 414" fill="none" stroke="#57606a" stroke-width="1.5"/>
+
+  <line x1="90" y1="262" x2="130" y2="262" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="130,257 130,267 138,262" fill="#57606a"/>
+  <rect x="140" y="234" width="430" height="56" rx="8" fill="#fee4e2" stroke="#b42318" stroke-width="1"/>
+  <text x="355" y="258" text-anchor="middle" font-size="13" font-weight="600" fill="#7a271a">Dies with the key</text>
+  <text x="355" y="277" text-anchor="middle" font-size="11" fill="#7a271a">Audio files, voiceprint embeddings, transcripts</text>
+
+  <line x1="90" y1="338" x2="130" y2="338" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="130,333 130,343 138,338" fill="#57606a"/>
+  <rect x="140" y="310" width="430" height="56" rx="8" fill="#fef0c7" stroke="#b54708" stroke-width="1"/>
+  <text x="355" y="334" text-anchor="middle" font-size="13" font-weight="600" fill="#7a2e0e">Needs re-encoding</text>
+  <text x="355" y="353" text-anchor="middle" font-size="11" fill="#7a2e0e">Video audio track stripped, visual stream kept</text>
+
+  <line x1="90" y1="414" x2="130" y2="414" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="130,409 130,419 138,414" fill="#57606a"/>
+  <rect x="140" y="386" width="430" height="56" rx="8" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="355" y="410" text-anchor="middle" font-size="13" font-weight="600" fill="#134e4a">Unaffected</text>
+  <text x="355" y="429" text-anchor="middle" font-size="11" fill="#134e4a">Images, text, video visual stream</text>
+
+  <text x="340" y="472" text-anchor="middle" font-size="11" fill="#57606a">Action is derived from asset_modality compared against binding.modality</text>
+</svg>
