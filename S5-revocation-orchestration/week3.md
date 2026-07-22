@@ -223,6 +223,10 @@ The proposed remedy is the **transactional outbox pattern** — the domain row a
 | S5-owned | `revocation_request`, `revocation_step`, `erasure_certificate`, `reconsent_request`, `purpose_change`, `compatibility_assessment`, `legal_hold`, `event_outbox` | S5 |
 | Read model | `subject_project_enrollment` | S5, consumed by S7 dashboard |
 
+![S5 database implementation showing three ownership bands: the shared consent model requiring a four-owner amendment, S5-owned lifecycle entities, and S5-owned supporting tables](assets/database-implementation.svg)
+
+Only the amber band requires the four-owner gate. Everything in the teal and blue bands is S5-owned and can be implemented and shipped without cross-team coordination, which allows work to proceed in parallel with the Contract 1 review.
+
 ### 2.2 Enumerations
 
 ```sql
@@ -527,6 +531,10 @@ The expand / backfill / contract pattern is used so that the change can be appli
 ---
 
 ## 3. API design
+
+![S5 API design showing four layers: callers, the public API surface, Temporal orchestration workflows, and shared effects including the transactional outbox and Kafka publication](assets/api-design.svg)
+
+The API surface is deliberately thin. Endpoints validate, authorise, persist a request row, and start a workflow; all long-running work executes in Temporal. This keeps the HTTP layer stateless and makes every multi-step operation crash-recoverable.
 
 ### 3.1 Conventions
 

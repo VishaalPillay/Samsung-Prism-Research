@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 580" width="680" height="580" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>S5 database implementation: ownership bands and entity relationships</title>
+  <desc>Three bands. The top band is the shared consent model requiring a Contract 1 four-owner amendment: consent capture session feeds consent record, which feeds consent purpose binding. The middle band is S5-owned lifecycle entities: reconsent request, revocation request and purpose change, with revocation request leading to revocation step and then erasure certificate, and purpose change leading to compatibility assessment. The bottom band is S5-owned supporting tables: legal hold, event outbox and the subject project enrollment read model.</desc>
+  <rect x="0" y="0" width="680" height="580" fill="#ffffff"/>
+
+  <text x="340" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#1f2328">S5 database implementation: ownership and relationships</text>
+
+  <text x="40" y="58" font-size="11" font-weight="600" fill="#7a2e0e">SHARED MODEL — Contract 1 amendment, four-owner gate</text>
+
+  <rect x="40" y="66" width="185" height="52" rx="6" fill="#fef0c7" stroke="#b54708" stroke-width="1"/>
+  <text x="132" y="87" text-anchor="middle" font-size="10" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#7a2e0e">consent_capture_session</text>
+  <text x="132" y="103" text-anchor="middle" font-size="10" fill="#7a2e0e">signature, OTP, notice</text>
+
+  <line x1="225" y1="92" x2="238" y2="92" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="238,87 238,97 246,92" fill="#57606a"/>
+
+  <rect x="247" y="66" width="185" height="52" rx="6" fill="#fef0c7" stroke="#b54708" stroke-width="1"/>
+  <text x="339" y="87" text-anchor="middle" font-size="10" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#7a2e0e">consent_record</text>
+  <text x="339" y="103" text-anchor="middle" font-size="10" fill="#7a2e0e">+ modality, + session_id</text>
+
+  <line x1="432" y1="92" x2="445" y2="92" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="445,87 445,97 453,92" fill="#57606a"/>
+
+  <rect x="455" y="66" width="185" height="52" rx="6" fill="#fef0c7" stroke="#b54708" stroke-width="1"/>
+  <text x="547" y="87" text-anchor="middle" font-size="10" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#7a2e0e">consent_purpose_binding</text>
+  <text x="547" y="103" text-anchor="middle" font-size="10" fill="#7a2e0e">+ modality in the key</text>
+
+  <line x1="339" y1="118" x2="339" y2="162" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="334,162 344,162 339,170" fill="#57606a"/>
+
+  <text x="40" y="152" font-size="11" font-weight="600" fill="#134e4a">S5-OWNED — lifecycle entities</text>
+
+  <rect x="40" y="170" width="185" height="52" rx="6" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="132" y="191" text-anchor="middle" font-size="10" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#134e4a">reconsent_request</text>
+  <text x="132" y="207" text-anchor="middle" font-size="10" fill="#134e4a">mints a new session</text>
+
+  <rect x="247" y="170" width="185" height="52" rx="6" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="339" y="191" text-anchor="middle" font-size="10" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#134e4a">revocation_request</text>
+  <text x="339" y="207" text-anchor="middle" font-size="10" fill="#134e4a">scope, SLA, workflow id</text>
+
+  <rect x="455" y="170" width="185" height="52" rx="6" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="547" y="191" text-anchor="middle" font-size="10" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#134e4a">purpose_change</text>
+  <text x="547" y="207" text-anchor="middle" font-size="10" fill="#134e4a">blast radius, change type</text>
+
+  <line x1="339" y1="222" x2="339" y2="244" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="334,244 344,244 339,252" fill="#57606a"/>
+  <line x1="547" y1="222" x2="547" y2="244" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="542,244 552,244 547,252" fill="#57606a"/>
+
+  <rect x="247" y="252" width="185" height="52" rx="6" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="339" y="273" text-anchor="middle" font-size="10" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#134e4a">revocation_step</text>
+  <text x="339" y="289" text-anchor="middle" font-size="10" fill="#134e4a">PK is the idempotency</text>
+
+  <rect x="455" y="252" width="185" height="52" rx="6" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="547" y="273" text-anchor="middle" font-size="10" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#134e4a">compatibility_assessment</text>
+  <text x="547" y="289" text-anchor="middle" font-size="10" fill="#134e4a">documented lawful basis</text>
+
+  <line x1="339" y1="304" x2="339" y2="326" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="334,326 344,326 339,334" fill="#57606a"/>
+
+  <rect x="247" y="334" width="185" height="52" rx="6" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="339" y="355" text-anchor="middle" font-size="10" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#134e4a">erasure_certificate</text>
+  <text x="339" y="371" text-anchor="middle" font-size="10" fill="#134e4a">Merkle root, signed</text>
+
+  <text x="40" y="424" font-size="11" font-weight="600" fill="#194185">S5-OWNED — supporting tables</text>
+
+  <rect x="40" y="436" width="185" height="52" rx="6" fill="#d1e9ff" stroke="#175cd3" stroke-width="1"/>
+  <text x="132" y="457" text-anchor="middle" font-size="10" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#194185">legal_hold</text>
+  <text x="132" y="473" text-anchor="middle" font-size="10" fill="#194185">overrides deletion</text>
+
+  <rect x="247" y="436" width="185" height="52" rx="6" fill="#d1e9ff" stroke="#175cd3" stroke-width="1"/>
+  <text x="339" y="457" text-anchor="middle" font-size="10" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#194185">event_outbox</text>
+  <text x="339" y="473" text-anchor="middle" font-size="10" fill="#194185">no dual-write loss</text>
+
+  <rect x="455" y="436" width="185" height="52" rx="6" fill="#d1e9ff" stroke="#175cd3" stroke-width="1"/>
+  <text x="547" y="457" text-anchor="middle" font-size="10" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#194185">subject_project_enrollment</text>
+  <text x="547" y="473" text-anchor="middle" font-size="10" fill="#194185">grant matrix read model</text>
+
+  <text x="340" y="530" text-anchor="middle" font-size="11" fill="#57606a">Amber requires the four-owner gate. Teal and blue are S5-owned and can ship independently.</text>
+</svg>

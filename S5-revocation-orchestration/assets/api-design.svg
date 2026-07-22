@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 560" width="680" height="560" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>S5 API design: callers, public API surface, Temporal orchestration, and effects</title>
+  <desc>Four layers. Callers are the subject portal, DPO console and the S6 policy decision point. They reach three groups of public endpoints: revocations, re-consents and purpose changes. Each endpoint group starts a corresponding Temporal workflow: revocation saga, re-consent cohort workflow and purpose change cascade. All three converge on shared effects: Postgres writes with the transactional outbox, key destruction in the KMS, and events published to Kafka for S6, S7, S8 and S14. Every POST returns 202 Accepted and progress is polled by GET.</desc>
+  <rect x="0" y="0" width="680" height="560" fill="#ffffff"/>
+
+  <text x="340" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#1f2328">S5 API design: request path and orchestration</text>
+
+  <text x="40" y="56" font-size="11" font-weight="600" fill="#57606a">CALLERS</text>
+  <rect x="40" y="64" width="600" height="46" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+  <text x="340" y="92" text-anchor="middle" font-size="11" fill="#1f2328">Subject portal &#183; DPO console &#183; S6 policy decision point (routes RE_CONSENT_REQUIRED)</text>
+
+  <line x1="340" y1="110" x2="340" y2="140" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="335,140 345,140 340,148" fill="#57606a"/>
+
+  <text x="40" y="170" font-size="11" font-weight="600" fill="#194185">PUBLIC API SURFACE — /api/v1</text>
+
+  <rect x="40" y="180" width="185" height="62" rx="6" fill="#d1e9ff" stroke="#175cd3" stroke-width="1"/>
+  <text x="132" y="201" text-anchor="middle" font-size="10" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#194185">POST /revocations</text>
+  <text x="132" y="217" text-anchor="middle" font-size="10" fill="#194185">GET status, steps</text>
+  <text x="132" y="232" text-anchor="middle" font-size="10" fill="#194185">GET certificate</text>
+
+  <rect x="247" y="180" width="185" height="62" rx="6" fill="#d1e9ff" stroke="#175cd3" stroke-width="1"/>
+  <text x="339" y="201" text-anchor="middle" font-size="10" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#194185">POST /re-consents</text>
+  <text x="339" y="217" text-anchor="middle" font-size="10" fill="#194185">GET delta</text>
+  <text x="339" y="232" text-anchor="middle" font-size="10" fill="#194185">POST accept, decline</text>
+
+  <rect x="455" y="180" width="185" height="62" rx="6" fill="#d1e9ff" stroke="#175cd3" stroke-width="1"/>
+  <text x="547" y="201" text-anchor="middle" font-size="10" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#194185">POST /purpose-changes</text>
+  <text x="547" y="217" text-anchor="middle" font-size="10" fill="#194185">POST simulate</text>
+  <text x="547" y="232" text-anchor="middle" font-size="10" fill="#194185">POST assessment</text>
+
+  <line x1="132" y1="242" x2="132" y2="272" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="127,272 137,272 132,280" fill="#57606a"/>
+  <line x1="339" y1="242" x2="339" y2="272" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="334,272 344,272 339,280" fill="#57606a"/>
+  <line x1="547" y1="242" x2="547" y2="272" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="542,272 552,272 547,280" fill="#57606a"/>
+
+  <text x="40" y="302" font-size="11" font-weight="600" fill="#134e4a">ORCHESTRATION — Temporal workflows</text>
+
+  <rect x="40" y="312" width="185" height="56" rx="6" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="132" y="334" text-anchor="middle" font-size="11" font-weight="600" fill="#134e4a">RevocationSaga</text>
+  <text x="132" y="352" text-anchor="middle" font-size="10" fill="#134e4a">signal: legalHoldLifted</text>
+
+  <rect x="247" y="312" width="185" height="56" rx="6" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="339" y="334" text-anchor="middle" font-size="11" font-weight="600" fill="#134e4a">ReConsentCohort</text>
+  <text x="339" y="352" text-anchor="middle" font-size="10" fill="#134e4a">signal: subjectResponded</text>
+
+  <rect x="455" y="312" width="185" height="56" rx="6" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="547" y="334" text-anchor="middle" font-size="11" font-weight="600" fill="#134e4a">PurposeChangeCascade</text>
+  <text x="547" y="352" text-anchor="middle" font-size="10" fill="#134e4a">signal: dpoApproved</text>
+
+  <line x1="132" y1="368" x2="132" y2="396" stroke="#57606a" stroke-width="1.5"/>
+  <line x1="339" y1="368" x2="339" y2="396" stroke="#57606a" stroke-width="1.5"/>
+  <line x1="547" y1="368" x2="547" y2="396" stroke="#57606a" stroke-width="1.5"/>
+  <line x1="132" y1="396" x2="547" y2="396" stroke="#57606a" stroke-width="1.5"/>
+  <line x1="339" y1="396" x2="339" y2="420" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="334,420 344,420 339,428" fill="#57606a"/>
+
+  <text x="40" y="450" font-size="11" font-weight="600" fill="#7a2e0e">EFFECTS</text>
+  <rect x="40" y="458" width="600" height="52" rx="6" fill="#fef0c7" stroke="#b54708" stroke-width="1"/>
+  <text x="340" y="480" text-anchor="middle" font-size="11" fill="#7a2e0e">Postgres write + outbox row in ONE transaction &#183; KMS key destruction</text>
+  <text x="340" y="498" text-anchor="middle" font-size="11" fill="#7a2e0e">relay publishes to Kafka &#8594; consumed by S6, S7, S8, S14</text>
+
+  <text x="340" y="542" text-anchor="middle" font-size="11" fill="#57606a">Every POST returns 202 Accepted with a polling URI; Idempotency-Key required on all writes</text>
+</svg>
