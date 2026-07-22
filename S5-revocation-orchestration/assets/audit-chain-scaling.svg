@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" width="680" height="430" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Scaling the audit chain: sharded per-entity chains, Merkle batching, and ledger anchoring</title>
+  <desc>Usage and audit events arrive at high volume. Instead of one global hash chain, the system writes sharded per-entity chains so writes proceed in parallel with no global bottleneck. Event hashes are then batched into Merkle trees, producing one root per batch. Only the roots are anchored into the immutable ledger owned by work package S14, which lets an auditor verify a single segment rather than replaying the entire history.</desc>
+  <rect x="0" y="0" width="680" height="430" fill="#ffffff"/>
+
+  <text x="340" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#1f2328">Audit write path under load</text>
+
+  <rect x="120" y="46" width="440" height="56" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+  <text x="340" y="70" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2328">Usage and audit events</text>
+  <text x="340" y="89" text-anchor="middle" font-size="11" fill="#57606a">Every access logged, append only, tokens not PII</text>
+
+  <line x1="340" y1="102" x2="340" y2="132" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="335,132 345,132 340,140" fill="#57606a"/>
+
+  <rect x="120" y="140" width="440" height="56" rx="8" fill="#d1e9ff" stroke="#175cd3" stroke-width="1"/>
+  <text x="340" y="164" text-anchor="middle" font-size="13" font-weight="600" fill="#194185">Sharded per-entity hash chains</text>
+  <text x="340" y="183" text-anchor="middle" font-size="11" fill="#194185">Parallel writes, no global serialization point</text>
+
+  <line x1="340" y1="196" x2="340" y2="226" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="335,226 345,226 340,234" fill="#57606a"/>
+
+  <rect x="120" y="234" width="440" height="56" rx="8" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="340" y="258" text-anchor="middle" font-size="13" font-weight="600" fill="#134e4a">Merkle batch</text>
+  <text x="340" y="277" text-anchor="middle" font-size="11" fill="#134e4a">One root per batch, not one anchor per event</text>
+
+  <line x1="340" y1="290" x2="340" y2="320" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="335,320 345,320 340,328" fill="#57606a"/>
+
+  <rect x="120" y="328" width="440" height="56" rx="8" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="340" y="352" text-anchor="middle" font-size="13" font-weight="600" fill="#134e4a">Anchored to immutable ledger (S14)</text>
+  <text x="340" y="371" text-anchor="middle" font-size="11" fill="#134e4a">Verify a segment via Merkle proof, not all history</text>
+
+  <text x="340" y="412" text-anchor="middle" font-size="11" fill="#57606a">Signed checkpoints bound verification cost independently of chain length</text>
+</svg>

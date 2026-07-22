@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 500" width="680" height="500" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Revised consent model: capture session, consent records per modality and tier cell, bindings per asset and modality, and assets</title>
+  <desc>A consent capture session represents one notice, one signature and one OTP verification. It has a one to many relationship with consent records, where each record is one modality and tier cell and is independently revocable. Each consent record has a one to many relationship with consent purpose bindings, keyed on asset, modality and purpose. Bindings relate many to one with assets, so a composite asset such as a video with an audio track carries several bindings.</desc>
+  <rect x="0" y="0" width="680" height="500" fill="#ffffff"/>
+
+  <text x="340" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#1f2328">Revised consent model with modality as a first-class dimension</text>
+
+  <rect x="130" y="46" width="420" height="60" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+  <text x="340" y="72" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2328">ConsentCaptureSession</text>
+  <text x="340" y="92" text-anchor="middle" font-size="11" fill="#57606a">One notice, one signature, one OTP verification</text>
+
+  <line x1="340" y1="106" x2="340" y2="148" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="335,148 345,148 340,156" fill="#57606a"/>
+  <text x="352" y="131" text-anchor="start" font-size="11" fill="#57606a">1 : N</text>
+
+  <rect x="130" y="156" width="420" height="60" rx="8" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="340" y="182" text-anchor="middle" font-size="13" font-weight="600" fill="#134e4a">ConsentRecord</text>
+  <text x="340" y="202" text-anchor="middle" font-size="11" fill="#134e4a">One row per modality and tier cell</text>
+
+  <line x1="340" y1="216" x2="340" y2="258" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="335,258 345,258 340,266" fill="#57606a"/>
+  <text x="352" y="241" text-anchor="start" font-size="11" fill="#57606a">1 : N</text>
+
+  <rect x="130" y="266" width="420" height="60" rx="8" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="340" y="292" text-anchor="middle" font-size="13" font-weight="600" fill="#134e4a">ConsentPurposeBinding</text>
+  <text x="340" y="312" text-anchor="middle" font-size="11" fill="#134e4a">Keyed on asset, modality and purpose</text>
+
+  <line x1="340" y1="326" x2="340" y2="368" stroke="#57606a" stroke-width="1.5"/>
+  <polygon points="335,368 345,368 340,376" fill="#57606a"/>
+  <text x="352" y="351" text-anchor="start" font-size="11" fill="#57606a">N : 1</text>
+
+  <rect x="130" y="376" width="420" height="60" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+  <text x="340" y="402" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2328">Asset</text>
+  <text x="340" y="422" text-anchor="middle" font-size="11" fill="#57606a">Composite assets carry several bindings, one per stream</text>
+
+  <text x="340" y="470" text-anchor="middle" font-size="11" fill="#57606a">Shaded entities are changed by the proposed Contract 1 amendment</text>
+</svg>

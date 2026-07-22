@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="680" height="400" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>Consent grain for one subject in one project: modality by tier matrix collected across multiple days</title>
+  <desc>Rows are modalities: image, video, audio and text. Columns are consent tiers: general, PII and biometric. Each cell is an independently grantable consent record with its own grant day. Image consents were granted on day one across all three tiers. Video and audio consents were granted on day five across all three tiers. Text general consent was granted on day one and text PII on day twelve, while text biometric is not applicable.</desc>
+  <rect x="0" y="0" width="680" height="400" fill="#ffffff"/>
+
+  <text x="340" y="30" text-anchor="middle" font-size="14" font-weight="600" fill="#1f2328">Consent grain for one subject in one project</text>
+
+  <text x="250" y="70" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2328">General</text>
+  <text x="410" y="70" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2328">PII</text>
+  <text x="570" y="70" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2328">Biometric</text>
+
+  <text x="155" y="129" text-anchor="end" font-size="13" font-weight="600" fill="#1f2328">Image</text>
+  <rect x="180" y="100" width="140" height="48" rx="8" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="250" y="129" text-anchor="middle" font-size="12" fill="#134e4a">Day 1</text>
+  <rect x="340" y="100" width="140" height="48" rx="8" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="410" y="129" text-anchor="middle" font-size="12" fill="#134e4a">Day 1</text>
+  <rect x="500" y="100" width="140" height="48" rx="8" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="570" y="129" text-anchor="middle" font-size="12" fill="#134e4a">Day 1</text>
+
+  <text x="155" y="185" text-anchor="end" font-size="13" font-weight="600" fill="#1f2328">Video</text>
+  <rect x="180" y="156" width="140" height="48" rx="8" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="250" y="185" text-anchor="middle" font-size="12" fill="#134e4a">Day 5</text>
+  <rect x="340" y="156" width="140" height="48" rx="8" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="410" y="185" text-anchor="middle" font-size="12" fill="#134e4a">Day 5</text>
+  <rect x="500" y="156" width="140" height="48" rx="8" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="570" y="185" text-anchor="middle" font-size="12" fill="#134e4a">Day 5</text>
+
+  <text x="155" y="241" text-anchor="end" font-size="13" font-weight="600" fill="#1f2328">Audio</text>
+  <rect x="180" y="212" width="140" height="48" rx="8" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="250" y="241" text-anchor="middle" font-size="12" fill="#134e4a">Day 5</text>
+  <rect x="340" y="212" width="140" height="48" rx="8" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="410" y="241" text-anchor="middle" font-size="12" fill="#134e4a">Day 5</text>
+  <rect x="500" y="212" width="140" height="48" rx="8" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="570" y="241" text-anchor="middle" font-size="12" fill="#134e4a">Day 5</text>
+
+  <text x="155" y="297" text-anchor="end" font-size="13" font-weight="600" fill="#1f2328">Text</text>
+  <rect x="180" y="268" width="140" height="48" rx="8" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="250" y="297" text-anchor="middle" font-size="12" fill="#134e4a">Day 1</text>
+  <rect x="340" y="268" width="140" height="48" rx="8" fill="#ccfbf1" stroke="#0f766e" stroke-width="1"/>
+  <text x="410" y="297" text-anchor="middle" font-size="12" fill="#134e4a">Day 12</text>
+  <rect x="500" y="268" width="140" height="48" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+  <text x="570" y="297" text-anchor="middle" font-size="11" fill="#57606a">Not applicable</text>
+
+  <text x="340" y="360" text-anchor="middle" font-size="11" fill="#57606a">Each shaded cell is one ConsentRecord row, independently revocable, with its own validity window</text>
+</svg>
